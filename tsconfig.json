@@ -5,6 +5,10 @@
         "noImplicitAny": false,
         "sourceMap": true,
         "outFile": "dist/app.js",
+        "lib": [
+            "es2015",
+            "dom"
+        ],
     },
     "include": [
         "src/**/*",   
