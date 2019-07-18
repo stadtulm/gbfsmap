@@ -7,13 +7,21 @@
 	<link rel="stylesheet" href="style/style.css">
 	<link rel="stylesheet" href="lib/leaflet/leaflet.css">
 	<script src="lib/leaflet/leaflet.js"></script>
-
+	
 </head>
 
 <body>
 	
 	<script data-main="dist/app" src="lib/require.js"></script>
-
+	<script>
+		requirejs.config({
+			paths: {
+				"leaflet": "/lib/leaflet/leaflet"
+			}
+		});
+	</script>
+	<!----<script type="module" src="dist/app.js"></script>-->
+	
 	<div id="map"></div>
 </body>
 </html>

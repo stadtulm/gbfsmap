@@ -4,9 +4,12 @@
         "target": "es5",
         "noImplicitAny": false,
         "sourceMap": true,
-        "outFile": "dist/app.js"
+        "outFile": "dist/app.js",
     },
     "include": [
-        "src/**/*"
+        "src/**/*",   
+    ],
+    "exclude": [
+        "node_modules"
     ]
 }
