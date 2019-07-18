@@ -1,4 +1,5 @@
 import { IStationInformation } from "./interfaces/IStationInformation";
+import { IStationStatus } from "./interfaces/IStationStatus";
 
 export class Gbfs {
 	constructor (gbfsUrl: string) {
@@ -14,7 +15,7 @@ export class Gbfs {
 		})
 	}
 
-	private loadStations() {
+	public loadStations() {
 		return new Promise<void>((resolve, reject)=>{
 			let url = this.gbfsRootUrl + "station_information.json"
 			fetch(url).then((res)=>{
@@ -26,7 +27,7 @@ export class Gbfs {
 		})
 	}
 
-	private loadStationStatus() {
+	public loadStationStatus() {
 		return new Promise<void>((resolve, reject)=>{
 			let url = this.gbfsRootUrl + "station_status.json"
 			fetch(url).then((res)=>{
@@ -78,6 +79,12 @@ export class Gbfs {
 					]
 				}
 			}
+			this.stationStatus.stations.forEach(status_station=>{
+				if (status_station.station_id == station.station_id){
+					Object.assign(point.properties, status_station)
+				}
+			})
+			
 			fCollection.features.push(point)
 		})
 

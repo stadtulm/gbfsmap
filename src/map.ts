@@ -15,7 +15,9 @@ export class Map {
 			this.map.fitBounds(this.stationLayer.getBounds())
 			
 			setInterval(()=>{
-				this.renderGbfs()
+				this.gbfs.loadStationStatus().then(()=>{
+					this.renderGbfs()
+				}).catch()
 			}, 1000 * 120)
 		}).catch(err=>{
 			console.warn("Error laoding GBFS:", err)
@@ -31,7 +33,9 @@ export class Map {
 		if (this.stationLayer) {
 			this.stationLayer.clearLayers()
 		} else {
-			this.stationLayer = L.geoJSON().addTo(this.map)
+			this.stationLayer = L.geoJSON(null, {
+				filter: (feature => feature.properties.is_installed) //remove inactive stations
+			}).addTo(this.map)
 		}
 		this.stationLayer.addData(<GeoJSON.GeoJsonObject>this.gbfs.getGeoJson())
 	}
