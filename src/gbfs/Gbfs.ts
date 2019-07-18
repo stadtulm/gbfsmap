@@ -1,5 +1,4 @@
 import { IStationInformation } from "./interfaces/IStationInformation";
-import { IStationStatus } from "./interfaces/IStationStatus";
 
 export class Gbfs {
 	constructor (gbfsUrl: string) {
@@ -32,7 +31,7 @@ export class Gbfs {
 			let url = this.gbfsRootUrl + "station_status.json"
 			fetch(url).then((res)=>{
 				res.json().then(json=>{
-					this.stationInformation = json
+					this.stationStatus = json
 					resolve()
 				}).catch(reject)
 			}).catch(reject)
@@ -47,10 +46,42 @@ export class Gbfs {
 		let fragments = gbfsUrl.split("/");
 		if (fragments[fragments.length-1] === "gbfs.json"){
 			fragments.pop()
-			return fragments.join("/");
+			return fragments.join("/") + "/";
 		} else {
+			if (gbfsUrl[gbfsUrl.length-1] !== "/"){
+				gbfsUrl = gbfsUrl + "/"
+			}
 			return gbfsUrl
 		}
+	}
+
+	public getGeoJson() {
+		console.log(this.stationInformation, this.stationStatus)
+		if (!(this.stationInformation && this.stationStatus)){
+			throw("stationInformation and/or stationStatus not loaded. Please wait for .ready")
+		}
+
+		let fCollection = {
+			"type": "FeatureCollection",
+			"features": []
+		}
+
+		this.stationInformation.stations.forEach((station)=>{
+			let point = {
+				"type": "Feature",
+				"properties": Object.assign({}, station),
+				"geometry": {
+					"type": "Point",
+					"coordinates": [
+						station.lon,
+						station.lat
+					]
+				}
+			}
+			fCollection.features.push(point)
+		})
+
+		return fCollection
 	}
 
 

@@ -12,6 +12,8 @@ export class Map {
 
 		this.initGbfs().then(()=>{
 			this.renderGbfs()
+			this.map.fitBounds(this.stationLayer.getBounds())
+			
 			setInterval(()=>{
 				this.renderGbfs()
 			}, 1000 * 120)
@@ -21,14 +23,20 @@ export class Map {
 	}
 
 	protected initGbfs() {
-		this.gbfs = new Gbfs("")
+		this.gbfs = new Gbfs("http://ubahndepot.com/applications/opendata/demo_gbfs/camp/gbfs.json")
 		return this.gbfs.ready
 	}
 
 	protected renderGbfs() {
-
+		if (this.stationLayer) {
+			this.stationLayer.clearLayers()
+		} else {
+			this.stationLayer = L.geoJSON().addTo(this.map)
+		}
+		this.stationLayer.addData(<GeoJSON.GeoJsonObject>this.gbfs.getGeoJson())
 	}
 
 	protected gbfs: Gbfs
 	protected map: L.Map
+	protected stationLayer: L.GeoJSON
 }
