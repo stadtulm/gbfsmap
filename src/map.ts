@@ -34,10 +34,17 @@ export class Map {
 			this.stationLayer.clearLayers()
 		} else {
 			this.stationLayer = L.geoJSON(null, {
-				filter: (feature => feature.properties.is_installed) //remove inactive stations
+				filter: (feature => feature.properties.is_installed), //hide inactive stations
+				onEachFeature: (feature, layer) => {
+					layer.bindPopup(this.getLabelText(feature))
+				}
 			}).addTo(this.map)
 		}
 		this.stationLayer.addData(<GeoJSON.GeoJsonObject>this.gbfs.getGeoJson())
+	}
+
+	protected getLabelText(feature) {
+		return `<b>${feature.properties.name}</b><br>Bikes: ${feature.properties.num_bikes_available}`
 	}
 
 	protected gbfs: Gbfs
