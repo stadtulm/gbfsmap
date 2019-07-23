@@ -8,3 +8,23 @@ html, body {
 	height: 100%;
 	width: 100%;
 }
+
+/*.leaflet-div-icon {
+	background: transparent !important;
+	border: 0 !important;
+}*/
+
+.bike-icon-inner {
+	background: white;
+    width: 20px;
+    height: 20px;
+    text-align: center;
+    line-height: 20px;
+	border-radius: 10px;
+	font-weight: bold;
+}
+
+.bike-icon-empty {
+	background: white;
+	color: silver;
+}

@@ -37,6 +37,18 @@ export class Map {
 				filter: (feature => feature.properties.is_installed), //hide inactive stations
 				onEachFeature: (feature, layer) => {
 					layer.bindPopup(this.getLabelText(feature))
+				},
+				pointToLayer: (feature, latlng) => {
+					let icon = new L.DivIcon({
+						html: this.getIconHtml(feature.properties.num_bikes_available, feature.properties.num_docks_available),
+						bgPos: [10, 10],
+						iconSize: [20, 20],
+						popupAnchor: [0, -15],
+						className: "bike-icon"
+					})
+					return new L.Marker(latlng, {
+						icon: icon
+					})
 				}
 			}).addTo(this.map)
 		}
@@ -45,6 +57,16 @@ export class Map {
 
 	protected getLabelText(feature) {
 		return `<b>${feature.properties.name}</b><br>Bikes: ${feature.properties.num_bikes_available}`
+	}
+
+	protected getIconHtml(bikes: number, docks: number) {
+		let cssClass = "bike-icon-inner"
+		if (bikes == 0) {
+			cssClass += " bike-icon-empty"
+		}
+		return `
+		<div class="${cssClass}">${bikes}</div>
+		`
 	}
 
 	protected gbfs: Gbfs
