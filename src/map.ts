@@ -41,9 +41,9 @@ export class Map {
 				pointToLayer: (feature, latlng) => {
 					let icon = new L.DivIcon({
 						html: this.getIconHtml(feature.properties.num_bikes_available, feature.properties.num_docks_available),
-						bgPos: [10, 10],
-						iconSize: [20, 20],
-						popupAnchor: [0, -15],
+						bgPos: [13, 13],
+						iconSize: [26, 26],
+						popupAnchor: [0, -17],
 						className: "bike-icon"
 					})
 					return new L.Marker(latlng, {
@@ -64,10 +64,32 @@ export class Map {
 		if (bikes == 0) {
 			cssClass += " bike-icon-empty"
 		}
+		let degree = bikes/docks * 360
+		//degree = 270
+		console.log(bikes, docks, degree)
+		let ringCss = `
+		background: ${this.bikeMarkerColor};
+		background-image:
+			linear-gradient(${90+degree}deg, transparent 50%, ${this.bikeMarkerBgColor} 50%),
+			linear-gradient(90deg, ${this.bikeMarkerBgColor} 50%, transparent 50%);
+		`
+		if (degree > 180) {
+			ringCss = `
+			background: ${this.bikeMarkerColor};
+			background-image:
+				linear-gradient(${degree-90}deg, transparent 50%, ${this.bikeMarkerColor} 50%),
+				linear-gradient(90deg, ${this.bikeMarkerBgColor} 50%, transparent 50%);
+			`
+		}
 		return `
-		<div class="${cssClass}">${bikes}</div>
+		<div class="bike-icon-ring" style="${ringCss}">
+			<div class="${cssClass}">${bikes}</div>
+		</div>
 		`
 	}
+
+	protected bikeMarkerColor = "rgb(87, 162, 255)"
+	protected bikeMarkerBgColor = "white"
 
 	protected gbfs: Gbfs
 	protected map: L.Map
