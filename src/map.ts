@@ -18,14 +18,17 @@ export class Map {
 				this.gbfs.loadStationStatus().then(()=>{
 					this.renderGbfs()
 				}).catch()
-			}, 1000 * 120)
+			}, 1000 * 60)
+			setInterval(()=>{
+				this.gbfs.loadStations()
+			}, 1000 * 60 * 5)
 		}).catch(err=>{
 			console.warn("Error laoding GBFS:", err)
 		})
 	}
 
 	protected initGbfs() {
-		this.gbfs = new Gbfs("http://ubahndepot.com/applications/opendata/demo_gbfs/camp/gbfs.json")
+		this.gbfs = new Gbfs("https://staging.ulm.dev/gbfs/examplesheet/gbfs.json")
 		return this.gbfs.ready
 	}
 
@@ -64,9 +67,8 @@ export class Map {
 		if (bikes == 0) {
 			cssClass += " bike-icon-empty"
 		}
-		let degree = bikes/docks * 360
+		let degree = bikes/(bikes+docks) * 360
 		//degree = 270
-		console.log(bikes, docks, degree)
 		let ringCss = `
 		background: ${this.bikeMarkerColor};
 		background-image:
