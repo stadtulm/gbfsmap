@@ -28,7 +28,8 @@ export class Map {
 	}
 
 	protected initGbfs() {
-		this.gbfs = new Gbfs("https://staging.ulm.dev/gbfs/examplesheet/gbfs.json")
+		//this.gbfs = new Gbfs("https://staging.ulm.dev/gbfs/examplesheet/gbfs.json")
+		this.gbfs = new Gbfs("http://localhost:8000/gbfs/gbfs.json")
 		return this.gbfs.ready
 	}
 
