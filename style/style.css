@@ -63,3 +63,49 @@ html, body {
     width: 60px;
 	border-radius: 3px;
 }
+
+.rent-row {
+	display: flex;
+	flex-wrap: nowrap;
+	justify-content: space-between;
+	margin-left: 10px;
+	margin-right: 10px;
+	margin-top: 10px;
+	padding-bottom: 10px;
+	border-bottom: 0.5px rgba(0,0,0,0.2) solid;
+}
+
+.rent-row-bike-value {
+	text-align: center;
+	font-family: sans-serif;
+	color: gray;
+	font-size: 24px;
+	font-weight: bold;
+}
+
+.rent-row-key-value {
+	text-align: center;
+	font-family: monospace;
+	color: gray;
+	font-size: 24px;
+	font-weight: bold;
+}
+
+.rent-row-description {
+	text-align: center;
+	font-family: sans-serif;
+	color: gray;
+	font-size: 10px;
+}
+
+.rent-row-return-button {
+	font-size: 16px;
+	color: white;
+	background: rgb(5, 133, 237);
+	border-radius: 20px;
+	border: 0;
+	height: 40px;
+	line-height: 30px;
+	padding-left: 20px;
+	padding-right: 20px;
+}

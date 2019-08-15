@@ -12,7 +12,7 @@ export class Rent {
 			password: ""
 		}
 		new StartRent(this.ApiEndpoint, auth)
-		new CurrentRent(this.ApiEndpoint, auth)
+		new CurrentRent(this.ApiEndpoint, auth, this.rentUI)
 	}
 
 	protected createRentUi() {
