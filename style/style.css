@@ -43,3 +43,23 @@ html, body {
 	background: white;
 	color: silver;
 }
+
+#rentui {
+	position: absolute;
+	background: white;
+	z-index: 999;
+	margin-top: 90px;
+    width: 94%;
+    margin-left: 3%;
+    height: 80%;
+    border-radius: 3px;
+}
+
+#rentmapcontrol {
+	border: 2px solid rgba(0,0,0,0.2);
+    background-clip: padding-box;
+    background: white;
+    height: 60px;
+    width: 60px;
+	border-radius: 3px;
+}

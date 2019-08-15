@@ -37,7 +37,7 @@ export class Map {
 	}
 
 	protected initRentUI() {
-		new Rent("http://localhost:8000/api")
+		new Rent("http://localhost:8000/api", this.map)
 	}
 
 	protected renderGbfs() {
