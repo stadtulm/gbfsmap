@@ -1,10 +1,14 @@
 export class AuthFetch {
-	public static fetch(url, auth: IAuthConfig) {
+	public static fetch(url, auth: IAuthConfig, options?: any) {
 		let headers = new Headers();
 		if (auth.type == EAuthType.Basic) {
 			headers.append('Authorization', 'Basic ' + btoa(auth.username + ':' + auth.password))
 		}
-		return fetch(url, {headers: headers}).then(res => res.json())
+		if (!options) {
+			options = {}
+		}
+		Object.assign(options, {headers: headers})
+		return fetch(url, options).then(res => res.json())
 	}
 }
 
