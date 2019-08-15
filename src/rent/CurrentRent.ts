@@ -55,7 +55,25 @@ export class CurrentRent {
 	}
 
 	protected returnRide(id) {
-		console.log(id)
+		let url = this.apiEndpoint + "/rent/finish"
+		AuthFetch.fetch(url, this.auth, {
+			body: JSON.stringify({rent_id: id}),
+			method: "POST",
+			headers: {
+				'Content-Type': 'application/json',
+			}
+		}).then(res => {
+			this.loadRents()
+			if (res.success == true){
+				alert("Successfully returned, please lock the bike")
+			} else {
+				alert("Error: " + (res.detail || res.error))
+			}
+		}).catch(err => {
+			this.loadRents()
+			console.log(err)
+			alert(err)
+		})
 	}
 
 	protected rents: IRent[]
