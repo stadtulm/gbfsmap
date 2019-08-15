@@ -20,7 +20,7 @@ export class Gbfs {
 			let url = this.gbfsRootUrl + "station_information.json"
 			fetch(url).then((res)=>{
 				res.json().then(json=>{
-					this.stationInformation = json
+					this.stationInformation = json.data
 					resolve()
 				}).catch(reject)
 			}).catch(reject)
@@ -32,7 +32,7 @@ export class Gbfs {
 			let url = this.gbfsRootUrl + "station_status.json"
 			fetch(url).then((res)=>{
 				res.json().then(json=>{
-					this.stationStatus = json
+					this.stationStatus = json.data
 					resolve()
 				}).catch(reject)
 			}).catch(reject)
