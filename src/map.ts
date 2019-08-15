@@ -1,5 +1,6 @@
 import * as L from "leaflet"
 import { Gbfs } from "./gbfs/Gbfs";
+import { Rent } from "./rent/Rent";
 
 export class Map {
 	constructor() {
@@ -25,12 +26,18 @@ export class Map {
 		}).catch(err=>{
 			console.warn("Error laoding GBFS:", err)
 		})
+
+		this.initRentUI()
 	}
 
 	protected initGbfs() {
 		//this.gbfs = new Gbfs("https://staging.ulm.dev/gbfs/examplesheet/gbfs.json")
 		this.gbfs = new Gbfs("http://localhost:8000/gbfs/gbfs.json")
 		return this.gbfs.ready
+	}
+
+	protected initRentUI() {
+		new Rent("http://localhost:8000/api")
 	}
 
 	protected renderGbfs() {
