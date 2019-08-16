@@ -7,6 +7,9 @@ export class AuthFetch {
 		if (auth.type == EAuthType.Basic) {
 			headers.append('Authorization', 'Basic ' + btoa(auth.username + ':' + auth.password))
 		}
+		if (auth.type == EAuthType.Token) {
+			headers.append('Authorization', 'Token ' + auth.token)
+		}
 		if (!options) {
 			options = {}
 		}
@@ -22,9 +25,11 @@ export class AuthFetch {
 export interface IAuthConfig {
 	type: EAuthType,
 	username?: string,
-	password?: string
+	password?: string,
+	token?: string
 }
 
 export enum EAuthType {
-	Basic
+	Basic,
+	Token
 }

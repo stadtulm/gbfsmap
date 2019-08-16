@@ -6,14 +6,36 @@ import { IAuthConfig, EAuthType } from "./Auth";
 export class Rent {
 	constructor(protected ApiEndpoint: string, protected map: L.Map){
 		this.createRentUi()
-		let auth: IAuthConfig = {
-			type: EAuthType.Basic,
-			username: "",
-			password: ""
-		}
 		
-		let currentRents = new CurrentRent(this.ApiEndpoint, auth, this.rentListUI)
-		new StartRent(this.ApiEndpoint, auth, this.rentStartUI, currentRents)
+		let auth = JSON.parse(localStorage.getItem("auth"))
+
+		let params = new URLSearchParams(window.location.search)
+		if (params.has("authservice") && params.has("code")){
+			let code = params.get("code")
+			//let authservice = params.get("authservice")
+			fetch("http://localhost:8000/rest-auth/github/", {
+				method: "POST",
+				headers: new Headers({"Content-Type": "application/json"}),
+				body: JSON.stringify({ "code": code})
+			}).then(res => res.json()).then(res => {
+				auth = {
+					type: EAuthType.Token,
+					token: res.key
+				}
+				localStorage.setItem("auth", JSON.stringify(auth))
+				window.location.search = ""
+
+				let currentRents = new CurrentRent(this.ApiEndpoint, auth, this.rentListUI)
+				new StartRent(this.ApiEndpoint, auth, this.rentStartUI, currentRents)
+			})
+		}
+
+		if (auth) {
+			let currentRents = new CurrentRent(this.ApiEndpoint, auth, this.rentListUI)
+			new StartRent(this.ApiEndpoint, auth, this.rentStartUI, currentRents)
+		} else {
+			console.log("not logged in")
+		}
 	}
 
 	protected createRentUi() {
