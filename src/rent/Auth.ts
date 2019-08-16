@@ -25,12 +25,33 @@ export class Auth {
 		switch (service) {
 			case "github":
 				return Auth.githubAuth(code)
+			case "stackexchange":
+					return Auth.stackexchangeAuth(code)
 		}
 	}
 
 	public static githubAuth(code): Promise<IAuthConfig> {
 		return new Promise<IAuthConfig>((resolve, reject)=>{
 			fetch("http://localhost:8000/rest-auth/github/", {
+				method: "POST",
+				headers: new Headers({"Content-Type": "application/json"}),
+				body: JSON.stringify({ "code": code})
+			}).then(res => res.json()).then(res => {
+				let auth = {
+					type: EAuthType.Token,
+					token: res.key
+				}
+				localStorage.setItem("auth", JSON.stringify(auth))
+				resolve(auth)
+			}).catch((err)=>{
+				reject(err)
+			})
+		})
+	}
+
+	public static stackexchangeAuth(code): Promise<IAuthConfig> {
+		return new Promise<IAuthConfig>((resolve, reject)=>{
+			fetch("http://localhost:8000/rest-auth/stackexchange/", {
 				method: "POST",
 				headers: new Headers({"Content-Type": "application/json"}),
 				body: JSON.stringify({ "code": code})
