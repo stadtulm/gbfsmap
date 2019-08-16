@@ -53,10 +53,32 @@ export class CurrentRent {
 		})
 	}
 
-	protected returnRide(id) {
+	protected returnRide(rideId) {
+		navigator.geolocation.getCurrentPosition((location) => {
+			console.log(location)
+			this.submitReturnRide(rideId, location.coords)
+		}, (err)=> {
+			console.log(err)
+			this.submitReturnRide(rideId)
+		}, {
+			timeout: 3000,
+			enableHighAccuracy: true,
+			maximumAge: 20000
+		})
+	}
+
+	protected submitReturnRide(rideId: number, location?: Coordinates) {
+		let data = {
+			rent_id: rideId
+		}
+		//TODO mindestgenauigkeit erhöhen
+		if (location && location.accuracy < 60){
+			data['lat'] = location.latitude
+			data['lng'] = location.longitude
+		}
 		let url = this.apiEndpoint + "/rent/finish"
 		AuthFetch.fetch(url, this.auth, {
-			body: JSON.stringify({rent_id: id}),
+			body: JSON.stringify(data),
 			method: "POST",
 			headers: {
 				'Content-Type': 'application/json',

@@ -22,7 +22,6 @@ export class StartRent {
 	public startRent() {
 		let bike_number = (<any>document.querySelector("#bike-number-input")).value;
 		
-		
 		navigator.geolocation.getCurrentPosition((location) => {
 			console.log(location)
 			this.submitStartRent(bike_number, location.coords)
