@@ -22,15 +22,32 @@ export class StartRent {
 	public startRent() {
 		let bike_number = (<any>document.querySelector("#bike-number-input")).value;
 		
-		/*
+		
 		navigator.geolocation.getCurrentPosition((location) => {
 			console.log(location)
+			this.submitStartRent(bike_number, location.coords)
+		}, (err)=> {
+			console.log(err)
+			this.submitStartRent(bike_number)
+		}, {
+			timeout: 3000,
+			enableHighAccuracy: true,
+			maximumAge: 20000
 		})
-		console.log(bike_number)*/
+	}
 
+	private submitStartRent(bikeNumber: string, location?: Coordinates) {
 		let url = this.apiEndpoint + "/rent/start"
+		let data = {
+			bike_number: bikeNumber
+		}
+		//TODO mindestgenauigkeit erhöhen
+		if (location && location.accuracy < 60){
+			data['lat'] = location.latitude
+			data['lng'] = location.longitude
+		}
 		AuthFetch.fetch(url, this.auth, {
-			body: JSON.stringify({bike_number: bike_number, station: 1}),
+			body: JSON.stringify(data),
 			method: "POST",
 			headers: {
 				'Content-Type': 'application/json',
