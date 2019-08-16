@@ -11,8 +11,8 @@ export class Rent {
 			username: "",
 			password: ""
 		}
-		new StartRent(this.ApiEndpoint, auth)
-		new CurrentRent(this.ApiEndpoint, auth, this.rentUI)
+		new StartRent(this.ApiEndpoint, auth, this.rentStartUI)
+		new CurrentRent(this.ApiEndpoint, auth, this.rentListUI)
 	}
 
 	protected createRentUi() {
@@ -24,10 +24,18 @@ export class Rent {
 				div.onclick = () => { this.toggleUI() }
 
 				this.rentUI = document.createElement('div');
-				this.rentUI.innerHTML = "UI"
 				this.rentUI.id = "rentui"
 				document.body.appendChild(this.rentUI)
 				this.rentUI.style.display = "none"
+
+				this.rentListUI = document.createElement('div');
+				this.rentListUI.id = "rentlistui"
+				this.rentUI.appendChild(this.rentListUI)
+
+				this.rentStartUI = document.createElement('div');
+				this.rentStartUI.id = "rentstartui"
+				this.rentUI.appendChild(this.rentStartUI)
+
 				return div;
 			}
 		});
@@ -41,4 +49,6 @@ export class Rent {
 
 	protected isUiVisible = false
 	protected rentUI: HTMLElement
+	protected rentListUI: HTMLElement
+	protected rentStartUI: HTMLElement
 }
