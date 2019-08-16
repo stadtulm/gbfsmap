@@ -11,8 +11,9 @@ export class Rent {
 			username: "",
 			password: ""
 		}
-		new StartRent(this.ApiEndpoint, auth, this.rentStartUI)
-		new CurrentRent(this.ApiEndpoint, auth, this.rentListUI)
+		
+		let currentRents = new CurrentRent(this.ApiEndpoint, auth, this.rentListUI)
+		new StartRent(this.ApiEndpoint, auth, this.rentStartUI, currentRents)
 	}
 
 	protected createRentUi() {

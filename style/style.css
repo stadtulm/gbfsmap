@@ -50,9 +50,10 @@ html, body {
 	z-index: 999;
 	margin-top: 90px;
     width: 94%;
-    margin-left: 3%;
-    height: 80%;
-    border-radius: 3px;
+	margin-left: 3%;
+    max-height: 80%;
+	border-radius: 3px;
+	overflow-y: scroll;
 }
 
 #rentmapcontrol {
@@ -108,4 +109,47 @@ html, body {
 	line-height: 30px;
 	padding-left: 20px;
 	padding-right: 20px;
+}
+
+.startrent-number-input {
+	font-size: 44px;
+	font-family: monospace;
+	text-align: center;
+	width: 80%;
+	margin-left: auto;
+	margin-right: auto;
+	border: 1px solid silver;
+	color: darkgray;
+	display: block;
+	margin-top: 8px;
+}
+
+.startrent-number-label {
+	text-align: center;
+	font-family: sans-serif;
+	color: gray;
+	font-size: 18px;
+}
+
+.startrent {
+	margin-top: 20px;
+}
+
+.start-rent-button {
+	font-size: 22px;
+	margin-top: 20px;
+	width: 70%;
+	margin-left: auto;
+	margin-right: auto;
+	font-family: sans-serif;
+	color: white;
+	background: rgb(5, 133, 237);
+	border-radius: 20px;
+	border: 0;
+	height: 40px;
+	line-height: 40px;
+	padding-left: 20px;
+	padding-right: 20px;
+	text-align: center;
+	margin-bottom: 20px;
 }

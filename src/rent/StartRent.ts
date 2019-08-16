@@ -1,9 +1,53 @@
-import { IAuthConfig } from "./Auth";
+import { IAuthConfig, AuthFetch } from "./Auth";
+import { CurrentRent } from "./CurrentRent";
 
 export class StartRent {
-	constructor(protected ApiEndpoint: string, protected auth: IAuthConfig, protected rentUI: HTMLElement) {
-		
+	constructor(protected apiEndpoint: string, protected auth: IAuthConfig, protected rentUI: HTMLElement, protected currentRents: CurrentRent) {
+		this.renderUI()
+	}
+	public renderUI() {
+		this.rentUI.innerHTML = `
+			<div class="startrent">
+				<div class="startrent-number-label">Enter Bike Number</div>
+				<input type="text" id="bike-number-input" class="startrent-number-input" />
+			</div>
+		`
+		let button = document.createElement('div')
+		button.innerHTML = "Start Rent"
+		button.className = "start-rent-button"
+		button.onclick = ()=>{this.startRent()}
+		this.rentUI.appendChild(button)
 	}
 
+	public startRent() {
+		let bike_number = (<any>document.querySelector("#bike-number-input")).value;
+		
+		/*
+		navigator.geolocation.getCurrentPosition((location) => {
+			console.log(location)
+		})
+		console.log(bike_number)*/
+
+		let url = this.apiEndpoint + "/rent/start"
+		AuthFetch.fetch(url, this.auth, {
+			body: JSON.stringify({bike_number: bike_number, station: 1}),
+			method: "POST",
+			headers: {
+				'Content-Type': 'application/json',
+			}
+		}).then(res => {
+			if (res.success == true){
+				let key = res.unlock_key
+				alert("Your unlock key is: " + key)
+				this.renderUI()
+				this.currentRents.loadRents()
+			} else {
+				alert("Error: " + (res.detail || res.error))
+			}
+		}).catch(err => {
+			console.log(err)
+			alert(err)
+		})
+	}
 	
 }
