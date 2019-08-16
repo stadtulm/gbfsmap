@@ -1,4 +1,4 @@
-import { IAuthConfig, AuthFetch } from "./Auth";
+import { IAuthConfig, Auth } from "./Auth";
 import { CurrentRent } from "./CurrentRent";
 
 export class StartRent {
@@ -41,11 +41,11 @@ export class StartRent {
 			bike_number: bikeNumber
 		}
 		//TODO mindestgenauigkeit erhöhen
-		if (location && location.accuracy < 60){
+		if (location && location.accuracy < 20){
 			data['lat'] = location.latitude
 			data['lng'] = location.longitude
 		}
-		AuthFetch.fetch(url, this.auth, {
+		Auth.fetch(url, this.auth, {
 			body: JSON.stringify(data),
 			method: "POST",
 			headers: {

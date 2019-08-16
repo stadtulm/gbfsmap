@@ -1,7 +1,7 @@
 import * as L from "leaflet"
 import { StartRent } from "./StartRent";
 import { CurrentRent } from "./CurrentRent";
-import { IAuthConfig, EAuthType } from "./Auth";
+import { IAuthConfig, EAuthType, Auth } from "./Auth";
 
 export class Rent {
 	constructor(protected ApiEndpoint: string, protected map: L.Map){
@@ -12,21 +12,15 @@ export class Rent {
 		let params = new URLSearchParams(window.location.search)
 		if (params.has("authservice") && params.has("code")){
 			let code = params.get("code")
-			//let authservice = params.get("authservice")
-			fetch("http://localhost:8000/rest-auth/github/", {
-				method: "POST",
-				headers: new Headers({"Content-Type": "application/json"}),
-				body: JSON.stringify({ "code": code})
-			}).then(res => res.json()).then(res => {
-				auth = {
-					type: EAuthType.Token,
-					token: res.key
-				}
-				localStorage.setItem("auth", JSON.stringify(auth))
+			let authservice = params.get("authservice")
+			Auth.auth(authservice, code).then((auth)=>{
+				//localStorage.setItem("auth", JSON.stringify(auth))
 				window.location.search = ""
 
 				let currentRents = new CurrentRent(this.ApiEndpoint, auth, this.rentListUI)
 				new StartRent(this.ApiEndpoint, auth, this.rentStartUI, currentRents)
+			}).catch((err)=>{
+				alert("Auth failed" + err)
 			})
 		}
 

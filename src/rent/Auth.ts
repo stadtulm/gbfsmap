@@ -1,4 +1,4 @@
-export class AuthFetch {
+export class Auth {
 	public static fetch(url, auth: IAuthConfig, options?: any) {
 		let headers = new Headers();
 		if (options && options.headers){
@@ -19,6 +19,32 @@ export class AuthFetch {
 		}*/
 		Object.assign(options, {headers: headers})
 		return fetch(url, options).then(res => res.json())
+	}
+
+	public static auth(service: string, code: string): Promise<IAuthConfig> {
+		switch (service) {
+			case "github":
+				return Auth.githubAuth(code)
+		}
+	}
+
+	public static githubAuth(code): Promise<IAuthConfig> {
+		return new Promise<IAuthConfig>((resolve, reject)=>{
+			fetch("http://localhost:8000/rest-auth/github/", {
+				method: "POST",
+				headers: new Headers({"Content-Type": "application/json"}),
+				body: JSON.stringify({ "code": code})
+			}).then(res => res.json()).then(res => {
+				let auth = {
+					type: EAuthType.Token,
+					token: res.key
+				}
+				localStorage.setItem("auth", JSON.stringify(auth))
+				resolve(auth)
+			}).catch((err)=>{
+				reject(err)
+			})
+		})
 	}
 }
 

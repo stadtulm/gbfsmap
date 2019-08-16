@@ -1,4 +1,4 @@
-import { AuthFetch, EAuthType, IAuthConfig } from "./Auth";
+import { Auth, EAuthType, IAuthConfig } from "./Auth";
 
 export class CurrentRent {
 	constructor(protected apiEndpoint: string, protected auth: IAuthConfig, protected rentUI: HTMLElement) {
@@ -8,7 +8,7 @@ export class CurrentRent {
 	public loadRents() {
 
 		let url = this.apiEndpoint + "/rent/current"
-		AuthFetch.fetch(url, this.auth)
+		Auth.fetch(url, this.auth)
 		.then(json => {
 			console.log(json)
 			this.rents = json
@@ -72,12 +72,12 @@ export class CurrentRent {
 			rent_id: rideId
 		}
 		//TODO mindestgenauigkeit erhöhen
-		if (location && location.accuracy < 60){
+		if (location && location.accuracy < 20){
 			data['lat'] = location.latitude
 			data['lng'] = location.longitude
 		}
 		let url = this.apiEndpoint + "/rent/finish"
-		AuthFetch.fetch(url, this.auth, {
+		Auth.fetch(url, this.auth, {
 			body: JSON.stringify(data),
 			method: "POST",
 			headers: {
