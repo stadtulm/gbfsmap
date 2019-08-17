@@ -44,7 +44,7 @@ html, body {
 	color: silver;
 }
 
-#rentui {
+.rentwindow {
 	position: absolute;
 	background: white;
 	z-index: 999;
@@ -56,7 +56,7 @@ html, body {
 	overflow-y: scroll;
 }
 
-#rentmapcontrol {
+.custommapcontrol {
 	border: 2px solid rgba(0,0,0,0.2);
     background-clip: padding-box;
     background: white;

@@ -5,10 +5,6 @@ import { IAuthConfig, EAuthType, Auth } from "./Auth";
 
 export class Rent {
 	constructor(protected ApiEndpoint: string, protected map: L.Map){
-		this.createRentUi()
-		
-		let auth = JSON.parse(localStorage.getItem("auth"))
-
 		let params = new URLSearchParams(window.location.search)
 		if (params.has("authservice") && params.has("code")){
 			let code = params.get("code")
@@ -24,12 +20,15 @@ export class Rent {
 			})
 		}
 
-		if (auth) {
+		if (Auth.hasAuth()){
+			this.createRentUi()
+			let auth = Auth.getAuth()
 			let currentRents = new CurrentRent(this.ApiEndpoint, auth, this.rentListUI)
 			new StartRent(this.ApiEndpoint, auth, this.rentStartUI, currentRents)
 		} else {
-			console.log("not logged in")
+			this.createLoginUi()
 		}
+		
 	}
 
 	protected createRentUi() {
@@ -38,10 +37,12 @@ export class Rent {
 				var div = L.DomUtil.create('div');
 				div.innerHTML = 'Rent';
 				div.id = "rentmapcontrol"
+				div.className = "custommapcontrol"
 				div.onclick = () => { this.toggleUI() }
 
 				this.rentUI = document.createElement('div');
 				this.rentUI.id = "rentui"
+				this.rentUI.className = "rentwindow"
 				document.body.appendChild(this.rentUI)
 				this.rentUI.style.display = "none"
 
@@ -59,13 +60,42 @@ export class Rent {
 		new rentControll({ position: 'topright' }).addTo(this.map);
 	}
 
+	protected createLoginUi() {
+		let loginControl = L.Control.extend({
+			onAdd: (map) => {
+				var div = L.DomUtil.create('div');
+				div.innerHTML = 'Login';
+				div.id = "loginmapcontrol"
+				div.className = "custommapcontrol"
+				div.onclick = () => { this.toggleLogin() }
+
+				this.loginUI = document.createElement('div');
+				this.loginUI.id = "loginui"
+				this.loginUI.className = "rentwindow"
+				this.loginUI.innerHTML="HELLO"
+				document.body.appendChild(this.loginUI)
+				this.loginUI.style.display = "none"
+
+				return div;
+			}
+		});
+		new loginControl({ position: 'topright' }).addTo(this.map);
+	}
+
 	protected toggleUI() {
 		this.isUiVisible = !this.isUiVisible
 		this.rentUI.style.display = this.isUiVisible ? "block" : "none"
 	}
 
+	protected toggleLogin() {
+		this.isLoginVisible = !this.isLoginVisible
+		this.loginUI.style.display = this.isLoginVisible ? "block" : "none"
+	}
+
 	protected isUiVisible = false
+	protected isLoginVisible = false
 	protected rentUI: HTMLElement
+	protected loginUI: HTMLElement
 	protected rentListUI: HTMLElement
 	protected rentStartUI: HTMLElement
 }
