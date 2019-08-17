@@ -1,6 +1,7 @@
 import * as L from "leaflet"
 import { StartRent } from "./StartRent";
 import { CurrentRent } from "./CurrentRent";
+import { Login } from "./Login";
 import { IAuthConfig, EAuthType, Auth } from "./Auth";
 
 export class Rent {
@@ -12,7 +13,7 @@ export class Rent {
 			Auth.auth(authservice, code).then((auth)=>{
 				//localStorage.setItem("auth", JSON.stringify(auth))
 				window.location.search = ""
-
+				this.createRentUi()
 				let currentRents = new CurrentRent(this.ApiEndpoint, auth, this.rentListUI)
 				new StartRent(this.ApiEndpoint, auth, this.rentStartUI, currentRents)
 			}).catch((err)=>{
@@ -72,9 +73,9 @@ export class Rent {
 				this.loginUI = document.createElement('div');
 				this.loginUI.id = "loginui"
 				this.loginUI.className = "rentwindow"
-				this.loginUI.innerHTML="HELLO"
 				document.body.appendChild(this.loginUI)
 				this.loginUI.style.display = "none"
+				new Login(this.loginUI)
 
 				return div;
 			}
