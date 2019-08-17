@@ -21,12 +21,26 @@ export class Auth {
 		return fetch(url, options).then(res => res.json())
 	}
 
+	public static getAuth() {
+		return JSON.parse(localStorage.getItem("auth"))
+	}
+
+	public static hasAuth() {
+		return !!Auth.getAuth()
+	}
+
+	public static removeAuth() {
+		localStorage.removeItem("auth")
+	}
+
 	public static auth(service: string, code: string): Promise<IAuthConfig> {
 		switch (service) {
 			case "github":
 				return Auth.githubAuth(code)
 			case "stackexchange":
 					return Auth.stackexchangeAuth(code)
+			case "slack":
+					return Auth.slackAuth(code)
 		}
 	}
 
@@ -52,6 +66,25 @@ export class Auth {
 	public static stackexchangeAuth(code): Promise<IAuthConfig> {
 		return new Promise<IAuthConfig>((resolve, reject)=>{
 			fetch("http://localhost:8000/rest-auth/stackexchange/", {
+				method: "POST",
+				headers: new Headers({"Content-Type": "application/json"}),
+				body: JSON.stringify({ "code": code})
+			}).then(res => res.json()).then(res => {
+				let auth = {
+					type: EAuthType.Token,
+					token: res.key
+				}
+				localStorage.setItem("auth", JSON.stringify(auth))
+				resolve(auth)
+			}).catch((err)=>{
+				reject(err)
+			})
+		})
+	}
+
+	public static slackAuth(code): Promise<IAuthConfig> {
+		return new Promise<IAuthConfig>((resolve, reject)=>{
+			fetch("http://localhost:8000/rest-auth/slack/", {
 				method: "POST",
 				headers: new Headers({"Content-Type": "application/json"}),
 				body: JSON.stringify({ "code": code})
