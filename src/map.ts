@@ -16,6 +16,7 @@ export class Map {
 			this.map.fitBounds(this.stationLayer.getBounds())
 			
 			setInterval(()=>{
+				//TODO auch Bikes laden
 				this.gbfs.loadStationStatus().then(()=>{
 					this.renderGbfs()
 				}).catch()
@@ -64,6 +65,15 @@ export class Map {
 			}).addTo(this.map)
 		}
 		this.stationLayer.addData(<GeoJSON.GeoJsonObject>this.gbfs.getGeoJson())
+
+		if (this.bikeLayer) {
+			this.bikeLayer.clearLayers()
+		} else {
+			this.bikeLayer = L.geoJSON(null, {
+				filter: (feature => !feature.properties.is_disabled)
+			}).addTo(this.map)
+		}
+		this.bikeLayer.addData(<GeoJSON.GeoJsonObject>this.gbfs.getBikeGeoJson())
 	}
 
 	protected getLabelText(feature) {
@@ -104,4 +114,5 @@ export class Map {
 	protected gbfs: Gbfs
 	protected map: L.Map
 	protected stationLayer: L.GeoJSON
+	protected bikeLayer: L.GeoJSON
 }

@@ -9,7 +9,8 @@ export class Gbfs {
 		this.ready = new Promise<void>((resolve, reject)=>{
 			Promise.all([
 				this.loadStations(),
-				this.loadStationStatus()
+				this.loadStationStatus(),
+				this.loadFreeBikeStatus()
 			]).then(()=>{
 				resolve()
 			}).catch(reject)
@@ -70,7 +71,7 @@ export class Gbfs {
 	}
 
 	public getGeoJson() {
-		console.log(this.stationInformation, this.stationStatus)
+		//console.log(this.stationInformation, this.stationStatus)
 		if (!(this.stationInformation && this.stationStatus)){
 			throw("stationInformation and/or stationStatus not loaded. Please wait for .ready")
 		}
@@ -101,6 +102,31 @@ export class Gbfs {
 			fCollection.features.push(point)
 		})
 
+		return fCollection
+	}
+
+	public getBikeGeoJson() {
+		if (!this.freeBikeStatus){
+			throw("freebike status not loaded. Please wait for .ready")
+		}
+		let fCollection = {
+			"type": "FeatureCollection",
+			"features": []
+		}
+		this.freeBikeStatus.bikes.forEach((bike)=>{
+			let point = {
+				"type": "Feature",
+				"properties": Object.assign({}, bike),
+				"geometry": {
+					"type": "Point",
+					"coordinates": [
+						bike.lon,
+						bike.lat
+					]
+				}
+			}
+			fCollection.features.push(point)
+		})
 		return fCollection
 	}
 
