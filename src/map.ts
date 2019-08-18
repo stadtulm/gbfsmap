@@ -72,7 +72,17 @@ export class Map {
 			this.bikeLayer.clearLayers()
 		} else {
 			this.bikeLayer = L.geoJSON(null, {
-				filter: (feature => !feature.properties.is_disabled)
+				filter: (feature => !feature.properties.is_disabled),
+				pointToLayer: (feature, latlng) => {
+					let icon = new L.Icon({
+						iconSize: [32, 32],
+						popupAnchor: [0, 0],
+						iconUrl: "./img/bike_icon.png"
+					})
+					return new L.Marker(latlng, {
+						icon: icon
+					})
+				}
 			}).addTo(this.map)
 		}
 		this.bikeLayer.addData(<GeoJSON.GeoJsonObject>this.gbfs.getBikeGeoJson())
