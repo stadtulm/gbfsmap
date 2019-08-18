@@ -16,8 +16,10 @@ export class Map {
 			this.map.fitBounds(this.stationLayer.getBounds())
 			
 			setInterval(()=>{
-				//TODO auch Bikes laden
-				this.gbfs.loadStationStatus().then(()=>{
+				Promise.all([
+					this.gbfs.loadStationStatus(),
+					this.gbfs.loadFreeBikeStatus()
+				]).then(()=>{
 					this.renderGbfs()
 				}).catch()
 			}, 1000 * 60)
