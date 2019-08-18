@@ -1,5 +1,6 @@
 import { IStationInformation } from "./interfaces/IStationInformation";
 import { IStationStatus } from "./interfaces/IStationStatus";
+import { IFreeBikeStatus } from "./interfaces/IFreeBikeStatus";
 
 export class Gbfs {
 	constructor (gbfsUrl: string) {
@@ -33,6 +34,18 @@ export class Gbfs {
 			fetch(url).then((res)=>{
 				res.json().then(json=>{
 					this.stationStatus = json.data
+					resolve()
+				}).catch(reject)
+			}).catch(reject)
+		})
+	}
+
+	public loadFreeBikeStatus() {
+		return new Promise<void>((resolve, reject)=>{
+			let url = this.gbfsRootUrl + "free_bike_status.json"
+			fetch(url).then((res)=>{
+				res.json().then(json=>{
+					this.freeBikeStatus = json.data
 					resolve()
 				}).catch(reject)
 			}).catch(reject)
@@ -97,4 +110,5 @@ export class Gbfs {
 	protected gbfsRootUrl: string
 	protected stationInformation: IStationInformation
 	protected stationStatus: IStationStatus
+	protected freeBikeStatus: IFreeBikeStatus
 }
