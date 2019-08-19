@@ -1,3 +1,4 @@
+TITLE = "camp gbfs"
 SYSTEM_URL = "http://localhost:8000"
 UI_SYSTEM_URL = "http://localhost:8080"
 API_ROOT = SYSTEM_URL + "/api"

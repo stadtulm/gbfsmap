@@ -1,8 +1,9 @@
 import { Map } from "./map";
 
+declare var TITLE;
 
-console.log("app")
+if (TITLE) {
+	document.title = TITLE;
+}
 
-		new Map()
-	
-
+new Map()
