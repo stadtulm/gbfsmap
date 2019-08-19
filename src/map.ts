@@ -13,7 +13,8 @@ export class Map {
 
 		this.initGbfs().then(()=>{
 			this.renderGbfs()
-			this.map.fitBounds(this.stationLayer.getBounds())
+			let bounds = L.featureGroup([this.stationLayer, this.bikeLayer]).getBounds()
+			this.map.fitBounds(bounds)
 			
 			setInterval(()=>{
 				Promise.all([
