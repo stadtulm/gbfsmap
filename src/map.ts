@@ -2,6 +2,9 @@ import * as L from "leaflet"
 import { Gbfs } from "./gbfs/Gbfs";
 import { Rent } from "./rent/Rent";
 
+declare var GBFS_URL;
+declare var API_ROOT;
+
 export class Map {
 	constructor() {
 		console.log("Hello Map")
@@ -36,12 +39,12 @@ export class Map {
 
 	protected initGbfs() {
 		//this.gbfs = new Gbfs("https://staging.ulm.dev/gbfs/examplesheet/gbfs.json")
-		this.gbfs = new Gbfs("https://api.dev.bike/gbfs/gbfs.json")
+		this.gbfs = new Gbfs(GBFS_URL)
 		return this.gbfs.ready
 	}
 
 	protected initRentUI() {
-		new Rent("https://api.dev.bike/api", this.map)
+		new Rent(API_ROOT, this.map)
 	}
 
 	protected renderGbfs() {

@@ -1,3 +1,5 @@
+declare var AUTH_API
+
 export class Auth {
 	public static fetch(url, auth: IAuthConfig, options?: any) {
 		let headers = new Headers();
@@ -46,7 +48,7 @@ export class Auth {
 
 	public static githubAuth(code): Promise<IAuthConfig> {
 		return new Promise<IAuthConfig>((resolve, reject)=>{
-			fetch("http://localhost:8000/rest-auth/github/", {
+			fetch(AUTH_API + "/github/", {
 				method: "POST",
 				headers: new Headers({"Content-Type": "application/json"}),
 				body: JSON.stringify({ "code": code})
@@ -65,7 +67,7 @@ export class Auth {
 
 	public static stackexchangeAuth(code): Promise<IAuthConfig> {
 		return new Promise<IAuthConfig>((resolve, reject)=>{
-			fetch("http://localhost:8000/rest-auth/stackexchange/", {
+			fetch(AUTH_API + "/stackexchange/", {
 				method: "POST",
 				headers: new Headers({"Content-Type": "application/json"}),
 				body: JSON.stringify({ "code": code})
@@ -84,7 +86,7 @@ export class Auth {
 
 	public static slackAuth(code): Promise<IAuthConfig> {
 		return new Promise<IAuthConfig>((resolve, reject)=>{
-			fetch("http://localhost:8000/rest-auth/slack/", {
+			fetch(AUTH_API + "/slack/", {
 				method: "POST",
 				headers: new Headers({"Content-Type": "application/json"}),
 				body: JSON.stringify({ "code": code})
