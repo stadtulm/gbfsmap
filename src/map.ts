@@ -5,7 +5,7 @@ import { Rent } from "./rent/Rent";
 export class Map {
 	constructor() {
 		console.log("Hello Map")
-		this.map = L.map("map").setView([51.505, -0.09], 13);
+		this.map = L.map("map").setView([53.03134, 13.30776], 15);
 		L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
 			attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors',
 			maxZoom: 19
@@ -35,12 +35,12 @@ export class Map {
 
 	protected initGbfs() {
 		//this.gbfs = new Gbfs("https://staging.ulm.dev/gbfs/examplesheet/gbfs.json")
-		this.gbfs = new Gbfs("http://localhost:8000/gbfs/gbfs.json")
+		this.gbfs = new Gbfs("https://api.dev.bike/gbfs/gbfs.json")
 		return this.gbfs.ready
 	}
 
 	protected initRentUI() {
-		new Rent("http://localhost:8000/api", this.map)
+		new Rent("https://api.dev.bike/api", this.map)
 	}
 
 	protected renderGbfs() {
