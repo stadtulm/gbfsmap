@@ -12,11 +12,12 @@ export class Login {
 				<div class="social-login-buttonbox">
 					<a class="social-login-service" href="https://github.com/login/oauth/authorize?client_id=${GITHUB_CLIENT_ID}">
 						<img src="/img/octocat.jpg"><br>
-						
 					</a>
 					<a class="social-login-service" href="https://stackoverflow.com/oauth?client_id=${STACKOVERFLOW_CLIENT_ID}&redirect_uri=${encodeURIComponent(UI_SYSTEM_URL + "/?authservice=stackexchange")}">
 						<img src="/img/so-icon.png"><br>
-						
+					</a>
+					<a class="social-login-service" href="#" onclick="alert('Coming soon'); return false">
+						<img src="/img/ephone.svg"><br>
 					</a>
 				</div>
 			</div>

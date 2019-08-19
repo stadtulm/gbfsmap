@@ -174,7 +174,7 @@ html, body {
 }
 
 .social-login-service {
-	flex-basis: 50%;
+	flex-basis: 33%;
 	text-decoration: none;
 	color: gray;
 	text-align: center;
