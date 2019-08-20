@@ -8,7 +8,7 @@ declare var API_ROOT;
 export class Map {
 	constructor() {
 		console.log("Hello Map")
-		this.map = L.map("map").setView([53.03134, 13.30776], 15);
+		this.map = L.map("map").setView([53.03134, 13.30776], 16);
 		L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
 			attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors',
 			maxZoom: 19
