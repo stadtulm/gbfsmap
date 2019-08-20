@@ -80,12 +80,14 @@ export class Map {
 				pointToLayer: (feature, latlng) => {
 					let icon = new L.Icon({
 						iconSize: [32, 32],
-						popupAnchor: [0, 0],
+						popupAnchor: [0, -20],
 						iconUrl: "./img/bike_icon.png"
 					})
-					return new L.Marker(latlng, {
+					let marker = new L.Marker(latlng, {
 						icon: icon
 					})
+					marker.bindPopup(`Bike <b>${feature.properties['bike_id']}</b>`)
+					return marker
 				}
 			}).addTo(this.map)
 		}
