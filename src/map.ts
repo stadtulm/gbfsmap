@@ -17,7 +17,9 @@ export class Map {
 		this.initGbfs().then(()=>{
 			this.renderGbfs()
 			let bounds = L.featureGroup([this.stationLayer, this.bikeLayer]).getBounds()
-			this.map.fitBounds(bounds)
+			
+			//TODO temporary deactiveated for camp
+			//this.map.fitBounds(bounds)
 			
 			setInterval(()=>{
 				Promise.all([
