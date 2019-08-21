@@ -6,9 +6,12 @@
 
 	<title>GBFS Map</title>
 	<link rel="stylesheet" href="style/style.css">
+	<link rel="stylesheet" href="style/fontello.css">
+	<link rel="stylesheet" href="style/animation.css">
 	<link rel="stylesheet" href="lib/leaflet/leaflet.css">
+	<link rel="stylesheet" href="lib/locate/L.Control.Locate.min.css">
 	<script src="./config.js"></script>
-	<script src="lib/leaflet/leaflet.js"></script>
+	<!----<script src="lib/locate/L.Control.Locate.min.js"></script>-->
 	
 </head>
 
@@ -18,12 +21,14 @@
 	<script>
 		requirejs.config({
 			paths: {
-				"leaflet": "../lib/leaflet/leaflet-src"
-			}
+				"leaflet": "../lib/leaflet/leaflet-src",
+				"locate": "../lib/locate/L.Control.Locate.min.js"
+			}/*,
+			shim: {
+				"locate": ["leaflet"]
+			}*/
 		});
 	</script>
-	<!----<script type="module" src="dist/app.js"></script>-->
-	
 	<div id="map"></div>
 </body>
 </html>

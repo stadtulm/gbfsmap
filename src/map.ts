@@ -1,4 +1,5 @@
 import * as L from "leaflet"
+import '../lib/locate/L.Control.Locate.js'
 import { Gbfs } from "./gbfs/Gbfs";
 import { Rent } from "./rent/Rent";
 
@@ -13,6 +14,24 @@ export class Map {
 			attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors',
 			maxZoom: 19
 		}).addTo(this.map)
+
+		//setTimeout(()=>{
+		try {
+			let locate =  (<any>L).control.locate({
+				position: "bottomleft",
+				icon: 'icon-direction',
+				iconLoading: 'icon-spin5 animate-spin',
+				locateOptions : {
+					watch: true,
+					enableHighAccuracy: true
+				}
+			}).addTo(this.map);
+			//locate.start()
+		//}, 1000)
+		} catch (err) {
+			console.log("err", err)
+		}
+		
 
 		this.initGbfs().then(()=>{
 			this.renderGbfs()
