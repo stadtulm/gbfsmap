@@ -31,15 +31,15 @@ export class Map {
 		} catch (err) {
 			console.log("err", err)
 		}
-		
+
 
 		this.initGbfs().then(()=>{
 			this.renderGbfs()
 			let bounds = L.featureGroup([this.stationLayer, this.bikeLayer]).getBounds()
-			
+
 			//TODO temporary deactiveated for camp
 			//this.map.fitBounds(bounds)
-			
+
 			setInterval(()=>{
 				Promise.all([
 					this.gbfs.loadStationStatus(),
@@ -102,7 +102,7 @@ export class Map {
 					let icon = new L.Icon({
 						iconSize: [32, 32],
 						popupAnchor: [0, -20],
-						iconUrl: "./img/bike_icon.png"
+						iconUrl: require("../img/bike_icon.png")
 					})
 					let marker = new L.Marker(latlng, {
 						icon: icon
