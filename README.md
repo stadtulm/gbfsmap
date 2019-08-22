@@ -12,7 +12,7 @@ $ npm install
 
 ## Configuration
 
-Copy `config.example.json` to `config.json` and adjust the URLs and authentication services.
+Copy `config.example.js` to `config.js` and adjust the URLs and authentication services.
 
 ## Start & watch
 
@@ -24,4 +24,9 @@ $ npm run serve
 
 ```bash
 $ npm run build
-``
+```
+
+## Run with docker-compose
+```
+docker-compose up -d --build
+```
