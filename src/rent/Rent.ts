@@ -36,7 +36,7 @@ export class Rent {
 		let rentControll = L.Control.extend({
 			onAdd: (map) => {
 				var div = L.DomUtil.create('div');
-				div.innerHTML = 'Rent';
+				div.innerHTML = 'Rent &amp; Return';
 				div.id = "rentmapcontrol"
 				div.className = "custommapcontrol"
 				div.onclick = () => { this.toggleUI() }
