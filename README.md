@@ -25,3 +25,8 @@ $ npm run serve
 ```bash
 $ npm run build
 ```
+
+## Run with docker-compose
+```
+docker-compose up -d --build
+```
