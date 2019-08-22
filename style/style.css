@@ -8,7 +8,7 @@ html, body {
 	bottom: 0;
 	left: 0;
 	right: 0;
-	top: 56px;
+	top: 80px;
 }
 
 /*.leaflet-div-icon {
@@ -189,7 +189,7 @@ html, body {
 nav {
 	position: absolute;
 	top: 0;
-	height: 56px;
+	height: 80px;
 	width: 100%;
 
 	display: flex;
@@ -208,8 +208,8 @@ nav div {
 }
 
 @media (orientation: landscape) and (max-height: 480px) {
-	nav { height: 48px; }
-	#map { top: 48px; }
+	nav { height: 56px; }
+	#map { top: 56px; }
 }
 
 @media (min-width: 480px) {
