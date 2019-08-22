@@ -5,8 +5,10 @@ html, body {
 
 #map {
 	position: absolute;
-	height: 100%;
-	width: 100%;
+	bottom: 0;
+	left: 0;
+	right: 0;
+	top: 56px;
 }
 
 /*.leaflet-div-icon {
@@ -182,4 +184,48 @@ html, body {
 
 .social-login-service img {
 	width: 100%;
+}
+
+nav {
+	position: absolute;
+	top: 0;
+	height: 56px;
+	width: 100%;
+
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	justify-content: space-between;
+}
+
+nav div {
+	position: absolute;
+	left: 74px;
+	right: 9px;
+	text-align: right;
+	display: inline-block;
+	color: rgba(0, 0, 0, 0.5);
+}
+
+@media (orientation: landscape) and (max-height: 480px) {
+	nav { height: 48px; }
+	#map { top: 48px; }
+}
+
+@media (min-width: 480px) {
+	nav { height: 64px; }
+	#map { top: 64px; }
+}
+
+nav a, nav a:hover, nav a:focus {
+	text-decoration: none;
+	color: #9a00fb;
+}
+
+nav {
+	font-family: sans-serif;
+	background-image: url("../img/bike_icon.png");
+	background-repeat: no-repeat;
+	background-size: contain;
+	background-position: 5px;
 }
