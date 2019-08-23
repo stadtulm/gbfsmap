@@ -6,29 +6,16 @@ import { IAuthConfig, EAuthType, Auth } from "./Auth";
 
 export class Rent {
 	constructor(protected ApiEndpoint: string, protected map: L.Map){
-		let params = new URLSearchParams(window.location.search)
-		if (params.has("authservice") && params.has("code")){
-			let code = params.get("code")
-			let authservice = params.get("authservice")
-			Auth.auth(authservice, code).then((auth)=>{
-				//localStorage.setItem("auth", JSON.stringify(auth))
-				window.location.search = ""
+		Auth.hasAuth().then((auth) => {
+			if (auth) {
 				this.createRentUi()
-				let currentRents = new CurrentRent(this.ApiEndpoint, auth, this.rentListUI)
-				new StartRent(this.ApiEndpoint, auth, this.rentStartUI, currentRents)
-			}).catch((err)=>{
-				alert("Auth failed" + err)
-			})
-		}
-
-		if (Auth.hasAuth()){
-			this.createRentUi()
-			let auth = Auth.getAuth()
-			let currentRents = new CurrentRent(this.ApiEndpoint, auth, this.rentListUI)
-			new StartRent(this.ApiEndpoint, auth, this.rentStartUI, currentRents)
-		} else {
-			this.createLoginUi()
-		}
+				let auth = Auth.getAuth()
+				let currentRents = new CurrentRent(this.ApiEndpoint, this.rentListUI)
+				new StartRent(this.ApiEndpoint, this.rentStartUI, currentRents)
+			} else {
+				this.createLoginUi()
+			}
+		})
 		
 	}
 

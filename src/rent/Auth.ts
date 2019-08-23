@@ -1,106 +1,62 @@
-declare var AUTH_API
+declare var AUTH_USER
 
 export class Auth {
-	public static fetch(url, auth: IAuthConfig, options?: any) {
+	public static fetch(url, options?: any) {
 		let headers = new Headers();
 		if (options && options.headers){
 			headers = new Headers(options.headers);
 		}
-		if (auth.type == EAuthType.Basic) {
-			headers.append('Authorization', 'Basic ' + btoa(auth.username + ':' + auth.password))
-		}
-		if (auth.type == EAuthType.Token) {
-			headers.append('Authorization', 'Token ' + auth.token)
-		}
+		let token = this.getAuth()
+		headers.append('Authorization', 'Token ' + token)
 		if (!options) {
 			options = {}
 		}
-		/*if (options.headers) {
-			Object.assign(headers, options.headers)
-			console.log("headers!!!", headers)
-		}*/
+		Object.assign(options, {
+			credentials: 'include',
+			mode: 'cors',
+		})
 		Object.assign(options, {headers: headers})
 		return fetch(url, options).then(res => res.json())
 	}
 
 	public static getAuth() {
-		return JSON.parse(localStorage.getItem("auth"))
+		return localStorage.getItem("auth")
 	}
 
 	public static hasAuth() {
-		return !!Auth.getAuth()
+		return new Promise<boolean>((resolve, reject)=>{
+			let token = this.getAuth()
+			let inParams = false
+			if (!token) {
+				let params = new URLSearchParams(window.location.search)
+				if (params.has("token")) {
+					inParams = true
+					token = params.get("token")
+				}
+			}
+			if (token) {
+				localStorage.setItem("auth", token)
+				Auth.fetch(AUTH_USER).then(data => {
+					if (data.pk) {
+						console.log('logged in')
+						if (inParams) {
+							window.location.search = ""
+						}
+						resolve(true)
+					} else {
+						console.log('not logged in')
+						this.removeAuth()
+						resolve(false)
+					}
+				})
+			} else {
+				resolve(false)
+			}
+		})
 	}
 
 	public static removeAuth() {
 		localStorage.removeItem("auth")
-	}
-
-	public static auth(service: string, code: string): Promise<IAuthConfig> {
-		switch (service) {
-			case "github":
-				return Auth.githubAuth(code)
-			case "stackexchange":
-					return Auth.stackexchangeAuth(code)
-			case "slack":
-					return Auth.slackAuth(code)
-		}
-	}
-
-	public static githubAuth(code): Promise<IAuthConfig> {
-		return new Promise<IAuthConfig>((resolve, reject)=>{
-			fetch(AUTH_API + "/github/", {
-				method: "POST",
-				headers: new Headers({"Content-Type": "application/json"}),
-				body: JSON.stringify({ "code": code})
-			}).then(res => res.json()).then(res => {
-				let auth = {
-					type: EAuthType.Token,
-					token: res.key
-				}
-				localStorage.setItem("auth", JSON.stringify(auth))
-				resolve(auth)
-			}).catch((err)=>{
-				reject(err)
-			})
-		})
-	}
-
-	public static stackexchangeAuth(code): Promise<IAuthConfig> {
-		return new Promise<IAuthConfig>((resolve, reject)=>{
-			fetch(AUTH_API + "/stackexchange/", {
-				method: "POST",
-				headers: new Headers({"Content-Type": "application/json"}),
-				body: JSON.stringify({ "code": code})
-			}).then(res => res.json()).then(res => {
-				let auth = {
-					type: EAuthType.Token,
-					token: res.key
-				}
-				localStorage.setItem("auth", JSON.stringify(auth))
-				resolve(auth)
-			}).catch((err)=>{
-				reject(err)
-			})
-		})
-	}
-
-	public static slackAuth(code): Promise<IAuthConfig> {
-		return new Promise<IAuthConfig>((resolve, reject)=>{
-			fetch(AUTH_API + "/slack/", {
-				method: "POST",
-				headers: new Headers({"Content-Type": "application/json"}),
-				body: JSON.stringify({ "code": code})
-			}).then(res => res.json()).then(res => {
-				let auth = {
-					type: EAuthType.Token,
-					token: res.key
-				}
-				localStorage.setItem("auth", JSON.stringify(auth))
-				resolve(auth)
-			}).catch((err)=>{
-				reject(err)
-			})
-		})
 	}
 }
 

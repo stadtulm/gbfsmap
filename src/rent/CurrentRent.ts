@@ -1,14 +1,14 @@
 import { Auth, EAuthType, IAuthConfig } from "./Auth";
 
 export class CurrentRent {
-	constructor(protected apiEndpoint: string, protected auth: IAuthConfig, protected rentUI: HTMLElement) {
+	constructor(protected apiEndpoint: string, protected rentUI: HTMLElement) {
 		this.loadRents()
 	}
 
 	public loadRents() {
 
 		let url = this.apiEndpoint + "/rent/current"
-		Auth.fetch(url, this.auth)
+		Auth.fetch(url)
 		.then(json => {
 			console.log(json)
 			this.rents = json
@@ -77,7 +77,7 @@ export class CurrentRent {
 			data['lng'] = location.longitude
 		}
 		let url = this.apiEndpoint + "/rent/finish"
-		Auth.fetch(url, this.auth, {
+		Auth.fetch(url, {
 			body: JSON.stringify(data),
 			method: "POST",
 			headers: {
