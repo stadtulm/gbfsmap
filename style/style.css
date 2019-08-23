@@ -228,4 +228,12 @@ nav {
 	background-repeat: no-repeat;
 	background-size: contain;
 	background-position: 5px;
+	font-style: 0.8rem;
+}
+
+
+@media (min-width: 768px) {
+	nav {
+		font-size: 1rem;
+	}
 }
