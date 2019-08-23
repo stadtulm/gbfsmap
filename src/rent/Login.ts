@@ -1,4 +1,4 @@
-declare var GITHUB_CLIENT_ID, STACKOVERFLOW_CLIENT_ID, UI_SYSTEM_URL
+declare var AUTH_LOGIN, AUTH_PROVIDER
 
 export class Login {
 	constructor(protected ui: HTMLElement){
@@ -6,16 +6,18 @@ export class Login {
 	}
 
 	protected createUI() {
+		let providerHTML = AUTH_PROVIDER.map(provider => {
+			let url = AUTH_LOGIN.replace(/\{provider\}/, provider.id)
+			return `<a class="social-login-service" href="${url}">
+				<img src="${provider.icon}" alt="${provider.name}"><br>
+			</a>
+			`
+		}).join('')
 		let baseHtml = `
 			<div class="social-login">
 				<div class="social-login-description">Login with</div>
 				<div class="social-login-buttonbox">
-					<a class="social-login-service" href="https://github.com/login/oauth/authorize?client_id=${GITHUB_CLIENT_ID}">
-						<img src="${require("../../img/octocat.jpg")}"><br>
-					</a>
-					<a class="social-login-service" href="https://stackoverflow.com/oauth?client_id=${STACKOVERFLOW_CLIENT_ID}&redirect_uri=${encodeURIComponent(UI_SYSTEM_URL + "/?authservice=stackexchange")}">
-						<img src="${require("../../img/so-icon.png")}"><br>
-					</a>
+					${providerHTML}
 					<a class="social-login-service" href="#" onclick="alert('Coming soon'); return false">
 						<img src="${require("../../img/ephone.svg")}"><br>
 					</a>
