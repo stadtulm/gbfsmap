@@ -1,8 +1,24 @@
 TITLE = "camp gbfs"
 SYSTEM_URL = "http://localhost:8000"
-UI_SYSTEM_URL = "http://localhost:8080"
 API_ROOT = SYSTEM_URL + "/api"
 GBFS_URL = SYSTEM_URL + "/gbfs/gbfs.json"
-AUTH_API = SYSTEM_URL + "/rest-auth"
-GITHUB_CLIENT_ID = "xxx"
-STACKOVERFLOW_CLIENT_ID = "xxx"
+AUTH_USER = SYSTEM_URL + "/rest-auth/user/"
+AUTH_LOGIN = SYSTEM_URL + "/auth/{provider}/login/"
+
+AUTH_PROVIDER = [
+  {
+    id: 'github',
+    name: 'GitHub',
+    icon: require("./img/octocat.jpg"),
+  },
+  {
+    id: 'stackexchange',
+    name: 'StackOverflow',
+    icon: require("./img/so-icon.png"),
+  },
+  {
+    id: 'fragdenstaat',
+    name: 'FragDenStaat.de',
+    icon: require("./img/fds-icon.png"),
+  },
+]

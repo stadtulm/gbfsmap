@@ -2,7 +2,7 @@ import { IAuthConfig, Auth } from "./Auth";
 import { CurrentRent } from "./CurrentRent";
 
 export class StartRent {
-	constructor(protected apiEndpoint: string, protected auth: IAuthConfig, protected rentUI: HTMLElement, protected currentRents: CurrentRent) {
+	constructor(protected apiEndpoint: string, protected rentUI: HTMLElement, protected currentRents: CurrentRent) {
 		this.renderUI()
 	}
 	public renderUI() {
@@ -45,7 +45,7 @@ export class StartRent {
 			data['lat'] = location.latitude
 			data['lng'] = location.longitude
 		}
-		Auth.fetch(url, this.auth, {
+		Auth.fetch(url, {
 			body: JSON.stringify(data),
 			method: "POST",
 			headers: {
