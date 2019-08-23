@@ -5,6 +5,7 @@ import { Rent } from "./rent/Rent";
 
 declare var GBFS_URL;
 declare var API_ROOT;
+declare var MEDIA_URL;
 
 export class Map {
 	constructor() {
@@ -107,7 +108,11 @@ export class Map {
 					let marker = new L.Marker(latlng, {
 						icon: icon
 					})
-					marker.bindPopup(`Bike <b>${feature.properties['bike_id']}</b>`)
+					var photo = "";
+					if ('photo' in feature.properties) {
+						photo = `<br><img src="${MEDIA_URL}/${feature.properties['photo']}" width="100">`;
+					}
+					marker.bindPopup(`Bike <b>${feature.properties['bike_id']}</b>${photo}`)
 					return marker
 				}
 			}).addTo(this.map)
