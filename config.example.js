@@ -21,4 +21,9 @@ AUTH_PROVIDER = [
     name: 'FragDenStaat.de',
     icon: require("./img/fds-icon.png"),
   },
+  {
+    id: 'eventphone',
+    name: 'Eventphone',
+    icon: require("./img/ephone.svg"),
+  },
 ]

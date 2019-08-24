@@ -18,9 +18,6 @@ export class Login {
 				<div class="social-login-description">Login with</div>
 				<div class="social-login-buttonbox">
 					${providerHTML}
-					<a class="social-login-service" href="#" onclick="alert('Coming soon'); return false">
-						<img src="${require("../../img/ephone.svg")}"><br>
-					</a>
 				</div>
 			</div>
 		`
