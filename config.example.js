@@ -7,6 +7,11 @@ AUTH_LOGIN = SYSTEM_URL + "/auth/{provider}/login/"
 
 AUTH_PROVIDER = [
   {
+    id: 'twitter',
+    name: 'Twitter',
+    icon: require("./img/twitter.jpg"),
+  },
+  {
     id: 'github',
     name: 'GitHub',
     icon: require("./img/octocat.jpg"),
