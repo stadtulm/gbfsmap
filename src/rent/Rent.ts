@@ -26,7 +26,8 @@ export class Rent {
 				div.innerHTML = 'Rent &amp; Return';
 				div.id = "rentmapcontrol"
 				div.className = "custommapcontrol"
-				div.onclick = () => { this.toggleUI() }
+				div.onclick = (ev) => { ev.preventDefault(); ev.stopPropagation(); this.toggleUI() }
+				div.ondblclick = (ev) => { ev.preventDefault(); ev.stopPropagation(); }
 
 				this.rentUI = document.createElement('div');
 				this.rentUI.id = "rentui"
@@ -55,7 +56,8 @@ export class Rent {
 				div.innerHTML = 'Login';
 				div.id = "loginmapcontrol"
 				div.className = "custommapcontrol"
-				div.onclick = () => { this.toggleLogin() }
+				div.onclick = (ev) => { ev.preventDefault(); ev.stopPropagation(); this.toggleLogin() }
+				div.ondblclick = (ev) => { ev.preventDefault(); ev.stopPropagation(); }
 
 				this.loginUI = document.createElement('div');
 				this.loginUI.id = "loginui"
