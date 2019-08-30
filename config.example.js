@@ -2,14 +2,14 @@ TITLE = "camp gbfs"
 SYSTEM_URL = "http://localhost:8000"
 API_ROOT = SYSTEM_URL + "/api"
 GBFS_URL = SYSTEM_URL + "/gbfs/gbfs.json"
-AUTH_USER = SYSTEM_URL + "/rest-auth/user/"
+AUTH_USER = API_ROOT + "/user"
 AUTH_LOGIN = SYSTEM_URL + "/auth/{provider}/login/"
 
 AUTH_PROVIDER = [
   {
     id: 'twitter',
     name: 'Twitter',
-    icon: require("./img/twitter.jpg"),
+    icon: require("./img/twitter.png"),
   },
   {
     id: 'github',
