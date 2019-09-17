@@ -17,7 +17,6 @@ export class Map {
 			maxZoom: 19
 		}).addTo(this.map)
 
-		//setTimeout(()=>{
 		try {
 			let locate =  (<any>L).control.locate({
 				position: "bottomleft",
@@ -28,8 +27,6 @@ export class Map {
 					enableHighAccuracy: true
 				}
 			}).addTo(this.map);
-			//locate.start()
-		//}, 1000)
 		} catch (err) {
 			console.log("err", err)
 		}
@@ -61,7 +58,6 @@ export class Map {
 	}
 
 	protected initGbfs() {
-		//this.gbfs = new Gbfs("https://staging.ulm.dev/gbfs/examplesheet/gbfs.json")
 		this.gbfs = new Gbfs(GBFS_URL)
 		return this.gbfs.ready
 	}
@@ -127,7 +123,6 @@ export class Map {
 			cssClass += " bike-icon-empty"
 		}
 		let degree = bikes/(bikes+docks) * 360
-		//degree = 270
 		let ringCss = `
 		background: ${this.bikeMarkerColor};
 		background-image:

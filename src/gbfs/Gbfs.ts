@@ -71,7 +71,6 @@ export class Gbfs {
 	}
 
 	public getGeoJson() {
-		//console.log(this.stationInformation, this.stationStatus)
 		if (!(this.stationInformation && this.stationStatus)){
 			throw("stationInformation and/or stationStatus not loaded. Please wait for .ready")
 		}
