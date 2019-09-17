@@ -32,3 +32,6 @@ AUTH_PROVIDER = [
     icon: require("./img/ephone.svg"),
   },
 ]
+
+DEFAULT_LOCATION = [53.03134, 13.30776]
+DEFAULT_ZOOM = 16

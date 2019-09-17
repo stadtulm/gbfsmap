@@ -4,12 +4,14 @@ import { Gbfs } from "./gbfs/Gbfs";
 import { Rent } from "./rent/Rent";
 
 declare var GBFS_URL;
+declare var DEFAULT_LOCATION;
+declare var DEFAULT_ZOOM;
 declare var API_ROOT;
 
 export class Map {
 	constructor() {
 		console.log("Hello Map")
-		this.map = L.map("map").setView([48.3984, 9.9908], 15);
+		this.map = L.map("map").setView(DEFAULT_LOCATION, DEFAULT_ZOOM);
 		L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
 			attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors',
 			maxZoom: 19
