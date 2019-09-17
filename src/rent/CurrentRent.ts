@@ -24,7 +24,6 @@ export class CurrentRent {
 			let row = document.createElement('div')
 			row.className = "rent-row"
 			row.innerHTML = `
-				
 				<div class="rent-row-bike">
 					<div class="rent-row-description">
 						Bike Number
@@ -33,15 +32,19 @@ export class CurrentRent {
 						${rent.bike.bike_number}
 					</div>
 				</div>
-				<div class="rent-row-key">
-					<div class="rent-row-description">
-						Unlock Key
+			`;
+			if (rent.bike.lock) {
+				row.innerHTML += `	
+					<div class="rent-row-key">
+						<div class="rent-row-description">
+							Unlock Key
+						</div>
+						<div class="rent-row-key-value">
+							${rent.bike.lock.unlock_key}
+						</div>
 					</div>
-					<div class="rent-row-key-value">
-						${rent.bike.lock.unlock_key}
-					</div>
-				</div>
-			`
+				`;
+			}
 			let button = document.createElement('button')
 			button.className = "rent-row-return-button"
 			button.innerHTML = "finish ride"
@@ -103,7 +106,7 @@ export class CurrentRent {
 interface IRent {
 	bike: {
 		bike_number: string,
-		lock: {
+		lock?: {
 			unlock_key: string
 		}
 	}, 

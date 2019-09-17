@@ -52,9 +52,11 @@ export class StartRent {
 				'Content-Type': 'application/json',
 			}
 		}).then(res => {
-			if (res.success == true){
+			if (res.success == true) {
 				let key = res.unlock_key
-				alert("Your unlock key is: " + key)
+				if (key) {
+					alert("Your unlock key is: " + key)
+				}
 				this.renderUI()
 				this.currentRents.loadRents()
 			} else {
