@@ -59,15 +59,3 @@ export class Auth {
 		localStorage.removeItem("auth")
 	}
 }
-
-export interface IAuthConfig {
-	type: EAuthType,
-	username?: string,
-	password?: string,
-	token?: string
-}
-
-export enum EAuthType {
-	Basic,
-	Token
-}

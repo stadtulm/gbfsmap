@@ -1,4 +1,4 @@
-import { Auth, EAuthType, IAuthConfig } from "./Auth";
+import { Auth } from "./Auth";
 
 export class CurrentRent {
 	constructor(protected apiEndpoint: string, protected rentUI: HTMLElement) {

@@ -1,4 +1,4 @@
-import { IAuthConfig, Auth } from "./Auth";
+import { Auth } from "./Auth";
 import { CurrentRent } from "./CurrentRent";
 
 export class StartRent {

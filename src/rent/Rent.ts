@@ -2,7 +2,7 @@ import * as L from "leaflet"
 import { StartRent } from "./StartRent";
 import { CurrentRent } from "./CurrentRent";
 import { Login } from "./Login";
-import { IAuthConfig, EAuthType, Auth } from "./Auth";
+import { Auth } from "./Auth";
 
 export class Rent {
 	constructor(protected ApiEndpoint: string, protected map: L.Map){
