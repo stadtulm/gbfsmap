@@ -75,13 +75,13 @@ export class Gbfs {
 			throw("stationInformation and/or stationStatus not loaded. Please wait for .ready")
 		}
 
-		let fCollection = {
+		let fCollection : GeoJSON.FeatureCollection = {
 			"type": "FeatureCollection",
 			"features": []
 		}
 
 		this.stationInformation.stations.forEach((station)=>{
-			let point = {
+			let point : GeoJSON.Feature<GeoJSON.Point> = {
 				"type": "Feature",
 				"properties": Object.assign({}, station),
 				"geometry": {
@@ -105,35 +105,39 @@ export class Gbfs {
 	}
 
 	public getBikeGeoJson() {
-		if (!this.freeBikeStatus){
+		if (!this.freeBikeStatus) {
 			throw("freebike status not loaded. Please wait for .ready")
 		}
-		let fCollection = {
-			"type": "FeatureCollection",
-			"features": []
-		}
-		this.freeBikeStatus.bikes.forEach((bike)=>{
-			let point = {
-				"type": "Feature",
-				"properties": Object.assign({}, bike),
-				"geometry": {
-					"type": "Point",
-					"coordinates": [
+
+		let fCollection : GeoJSON.FeatureCollection = {
+			type: 'FeatureCollection',
+			features: []
+		};
+
+		this.freeBikeStatus.bikes.forEach((bike) => {
+			let point : GeoJSON.Feature<GeoJSON.Point> = {
+				type: 'Feature',
+				properties: Object.assign({}, bike),
+				geometry: {
+					type: 'Point',
+					coordinates: [
 						bike.lon,
 						bike.lat
 					]
 				}
-			}
-			fCollection.features.push(point)
-		})
+			};
+
+			fCollection.features.push(point);
+		});
+
 		return fCollection
 	}
 
 
-	public ready: Promise<void>
+	public ready: Promise<void>;
 	
-	protected gbfsRootUrl: string
-	protected stationInformation: IStationInformation
-	protected stationStatus: IStationStatus
-	protected freeBikeStatus: IFreeBikeStatus
+	protected gbfsRootUrl: string;
+	protected stationInformation: IStationInformation;
+	protected stationStatus: IStationStatus;
+	protected freeBikeStatus: IFreeBikeStatus;
 }

@@ -3,23 +3,18 @@
   "version": "1.0.0",
   "description": "Map to Show GBFS information",
   "main": "src/app.ts",
-  "directories": {
-    "lib": "lib"
-  },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "parcel build index.html",
-    "serve": "parcel index.html"
+    "lint": "tslint  --project tsconfig.json -t codeFrame 'src/**/*.ts' 'test/**/*.ts'",
+    "build": "tsc"
   },
   "author": "",
   "license": "MIT",
   "dependencies": {
-    "leaflet": "^1.5.1"
+    "leaflet": "^1.5.1",
+    "leaflet.locatecontrol": "^0.67.0"
   },
   "devDependencies": {
     "@types/leaflet": "^1.4.6",
-    "@types/node": "^12.7.2",
-    "parcel-bundler": "^1.12.3",
-    "typescript": "^3.5.3"
+    "typescript": "^3.6.3"
   }
 }

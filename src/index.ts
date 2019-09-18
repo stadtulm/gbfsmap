@@ -1,12 +1,10 @@
 import * as L from "leaflet"
 import '../lib/locate/L.Control.Locate.js'
 import { Gbfs } from "./gbfs/Gbfs";
-import { Rent } from "./rent/Rent";
 
 declare var GBFS_URL;
 declare var DEFAULT_LOCATION;
 declare var DEFAULT_ZOOM;
-declare var API_ROOT;
 
 export class Map {
 	constructor() {
@@ -18,7 +16,7 @@ export class Map {
 		}).addTo(this.map)
 
 		try {
-			let locate =  (<any>L).control.locate({
+			(<any>L).control.locate({
 				position: "bottomleft",
 				icon: 'icon-direction',
 				iconLoading: 'icon-spin5 animate-spin',
@@ -36,8 +34,7 @@ export class Map {
 			this.renderGbfs()
 			let bounds = L.featureGroup([this.stationLayer, this.bikeLayer]).getBounds()
 
-			//TODO temporary deactiveated for camp
-			//this.map.fitBounds(bounds)
+			this.map.fitBounds(bounds)
 
 			setInterval(()=>{
 				Promise.all([
@@ -53,8 +50,6 @@ export class Map {
 		}).catch(err=>{
 			console.warn("Error laoding GBFS:", err)
 		})
-
-		this.initRentUI()
 	}
 
 	protected initGbfs() {
@@ -62,15 +57,11 @@ export class Map {
 		return this.gbfs.ready
 	}
 
-	protected initRentUI() {
-		new Rent(API_ROOT, this.map)
-	}
-
 	protected renderGbfs() {
 		if (this.stationLayer) {
 			this.stationLayer.clearLayers()
 		} else {
-			this.stationLayer = L.geoJSON(null, {
+			this.stationLayer = L.geoJSON(undefined, {
 				filter: (feature => feature.properties.is_installed), //hide inactive stations
 				onEachFeature: (feature, layer) => {
 					layer.bindPopup(this.getLabelText(feature))
@@ -94,13 +85,13 @@ export class Map {
 		if (this.bikeLayer) {
 			this.bikeLayer.clearLayers()
 		} else {
-			this.bikeLayer = L.geoJSON(null, {
+			this.bikeLayer = L.geoJSON(undefined, {
 				filter: (feature => !feature.properties.is_disabled),
 				pointToLayer: (feature, latlng) => {
 					let icon = new L.Icon({
 						iconSize: [32, 32],
 						popupAnchor: [0, -20],
-						iconUrl: require("../img/bike_icon.png")
+						// iconUrl: require("../img/bike_icon.png") todo
 					})
 					let marker = new L.Marker(latlng, {
 						icon: icon
