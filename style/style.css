@@ -97,6 +97,14 @@ html, body {
 	font-weight: bold;
 }
 
+.rent-row-time-value {
+	text-align: center;
+	font-family: sans-serif;
+	color: gray;
+	font-size: 24px;
+	font-weight: normal;
+}
+
 .rent-row-description {
 	text-align: center;
 	font-family: sans-serif;

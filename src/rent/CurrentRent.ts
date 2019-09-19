@@ -1,5 +1,7 @@
 import { Auth } from "./Auth";
 
+const leadingZero = (num) => `0${num}`.slice(-2);
+
 export class CurrentRent {
 	constructor(protected apiEndpoint: string, protected rentUI: HTMLElement) {
 		this.loadRents()
@@ -45,6 +47,20 @@ export class CurrentRent {
 					</div>
 				`;
 			}
+
+			let rentTime = CurrentRent.calculateRentTime(rent.rent_start);
+			
+			row.innerHTML += `	
+				<div class="rent-row-time">
+					<div class="rent-row-description">
+						Rent time
+					</div>
+					<div class="rent-row-time-value">
+						<time datetime="${rent.rent_start}" title="rent started at ${rent.rent_start}">${rentTime}</time>
+					</div>
+				</div>
+			`;
+
 			let button = document.createElement('button')
 			button.className = "rent-row-return-button"
 			button.innerHTML = "finish ride"
@@ -52,8 +68,28 @@ export class CurrentRent {
 				this.returnRide(rent.id)
 			}
 			row.appendChild(button)
-			this.rentUI.appendChild(row)
+			this.rentUI.appendChild(row);
 		})
+		if (this.updateInterval) {
+			clearInterval(this.updateInterval);
+		}
+		this.updateInterval = setInterval(this.updateRentTime.bind(this), 1000);
+	}
+
+	public static calculateRentTime(start):string {
+		let rentStartDate = new Date(start);
+		let now = new Date();
+		let rentDiff = Math.floor((now.getTime() - rentStartDate.getTime())/1000);
+		let hours = Math.floor(rentDiff / 3600);
+		let minutes = Math.floor((rentDiff - hours*3600)/60);
+		let seconds = rentDiff - (hours*3600 + minutes*60);
+		return `${leadingZero(hours)}:${leadingZero(minutes)}:${leadingZero(seconds)}`;
+	}
+
+	protected updateRentTime() {
+		this.rentUI.querySelectorAll('.rent-row-time-value time').forEach((el: HTMLTimeElement) => {
+			el.innerHTML = CurrentRent.calculateRentTime(el.dateTime);
+		});
 	}
 
 	protected returnRide(rideId) {
@@ -101,6 +137,7 @@ export class CurrentRent {
 	}
 
 	protected rents: IRent[]
+	protected updateInterval: any;
 }
 
 interface IRent {
